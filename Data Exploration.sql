@@ -44,3 +44,24 @@ SELECT
 	SUM(price_usd) -SUM(cogs_usd) AS total_profit
 FROM orders;
 
+-- see what tables can be joined together, replacing primary_product_id with the product name in the orders table using  the products table
+SELECT 
+    o.order_id,
+    o.created_at,
+    p.product_name,
+    o.items_purchased,
+    o.price_usd
+FROM orders o
+JOIN products p 
+    ON o.primary_product_id = p.product_id;
+
+-- can't see product_id 5 so doing a count of items sold per product_id
+	SELECT 
+    OI.product_id,
+    P.product_name,
+    COUNT(OI.order_item_id) AS total_sold_items
+FROM order_items OI
+JOIN products P 
+    ON OI.product_id = P.product_id
+GROUP BY OI.product_id, P.product_name
+ORDER BY OI.product_id;
