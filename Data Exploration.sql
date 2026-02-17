@@ -44,16 +44,25 @@ SELECT
 	SUM(price_usd) -SUM(cogs_usd) AS total_profit
 FROM orders;
 
+-- how much every year
+-- Orders per year
+SELECT 
+    YEAR(created_at) AS order_year,
+    COUNT(*) AS total_orders
+FROM orders
+GROUP BY YEAR(created_at)
+ORDER BY order_year;
+
 -- see what tables can be joined together, replacing primary_product_id with the product name in the orders table using  the products table
 SELECT 
-    o.order_id,
-    o.created_at,
-    p.product_name,
-    o.items_purchased,
-    o.price_usd
-FROM orders o
-JOIN products p 
-    ON o.primary_product_id = p.product_id;
+    O.order_id,
+    O.created_at,
+    P.product_name,
+    O.items_purchased,
+    O.price_usd
+FROM orders O
+JOIN products P 
+    ON O.primary_product_id = P.product_id;
 
 -- can't see product_id 5 so doing a count of items sold per product_id
 	SELECT 
